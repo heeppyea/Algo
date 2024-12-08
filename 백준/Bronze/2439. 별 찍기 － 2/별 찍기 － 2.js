@@ -1,14 +1,11 @@
 let fs = require('fs');
-let input = fs.readFileSync("/dev/stdin").toString().split(" ");
+let input = fs.readFileSync('/dev/stdin').toString().split(' ');
 
-let answer = '';
-let blank = '';
+let answer = "";
 
 for (i = 1; i <= input; i++) {
     answer += "*";
-    for (let j = 0; j < input - i; j++) {
-        blank += " ";
-    }
+    const blank = ' '.repeat(input -i)
     console.log(blank + answer);
-    blank = "";
 }
+
