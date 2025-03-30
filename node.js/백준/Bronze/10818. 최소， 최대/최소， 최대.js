@@ -1,18 +1,16 @@
 let fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().split('\n');
+let input = fs.readFileSync("/dev/stdin").toString().split('\n');
 
-const A = input[1].split(' ').map(Number); // 숫자로 변환
+// 값 초기화
+let n = Number(input[0]);
+let arr = input[1].split(' ').map(Number);
 
-let result = A.reduce((acc, cur) => {
-    if(cur > acc.max){
-        acc.max = cur;
-    }
-    if(cur < acc.min) {
-        acc.min = cur;
-    }
-    return acc;
+let minValue = 1000001; // 일단 큰 수로 초기화
+let maxValue = -1000001; // 일단 작은 수로 초기화 
 
-}, {min : A[0], max : A[0]})
+for (let i = 0; i < n; i++) {
+    if(minValue > arr[i]) minValue = arr[i];
+    if(maxValue < arr[i]) maxValue = arr[i];
+}
 
-
-console.log(result.min, result.max)
+console.log(minValue, maxValue);
