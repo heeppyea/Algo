@@ -3,6 +3,7 @@ let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const money = Number(input[0].split(' ')[1])
 const coins = input.slice(1).map(Number)
+// 정렬하지 않고 for문을 맨 뒤에서 부터 도는 것도 방법이다.
 const sortedCoin = coins.sort((a, b) => b - a);
 
 let num = 0;
