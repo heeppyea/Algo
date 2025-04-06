@@ -13,7 +13,7 @@ for (const v of sortedCoin) {
         const share = Math.floor(calcMoney / v) // 나머지 제외 몫만
         num += share
         calcMoney -= v * share;
-    }
+    } else if (calcMoney < 0) break;
 }
 
 console.log(num)
