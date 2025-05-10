@@ -14,15 +14,14 @@ class MinHeap{
         [this.H[a], this.H[b]] = [this.H[b], this.H[a]];
     }
 
-    upHeap(i) {
-        if (i === 1)
-            return;
-        
-        const parent = Math.floor(i/2);
-        // 부모보다 현재 값이 작다면 부모와 노드 위치 변경
-        if (this.H[i] < this.H[parent]){
-            this.swap(i, parent);
-            this.upHeap(parent);
+    upHeap() {
+        let index = this.H.length - 1;
+        let parentIdx = Math.floor(index / 2); // 부모 노드의 위치
+
+        while(this.H[parentIdx] && this.H[index] < this.H[parentIdx]) {
+            this.swap(index, parentIdx);
+            index = parentIdx
+            parentIdx = Math.floor(index / 2);
         }
     }
 
@@ -43,7 +42,7 @@ class MinHeap{
     // 삽입 메서드
     push(x) {
         this.H.push(x);
-        this.upHeap(this.size());
+        this.upHeap();
     }
 
     deleteMin() {
