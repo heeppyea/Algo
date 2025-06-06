@@ -1,115 +1,51 @@
-let fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n')
+const fs = require("fs");
+let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-class Dequeue {
-    constructor () {
-        this.items = {};
-        this.headIdx = 0;
-        this.tailIdx = 0;
-    }
+const iter = input.shift();
 
-    // unShift 를 구현과 같음
-    pushF (x) {
-        const items = this.items
-        for (const [idx, value] of Object.entries(items)) {
-            this.items[Number(idx) + 1] = value;
+let deque = [];
+
+let ans = [];
+
+for(let i = 0; i < iter; i++){
+    let [cmd, num] = input[i].split(" ");
+    
+    if(cmd === "push_front"){
+        deque.unshift(num);
+    } else if(cmd === "push_back") {
+        deque.push(num);
+    } else if(cmd === "pop_front"){
+        if(deque.length > 0){
+            ans.push(deque.shift());
+        } else {
+            ans.push(-1);
         }
-        this.items[this.headIdx] = x;
-        this.tailIdx ++;
-    }
-
-    // push 구현
-    pushB (x) {
-        this.items[this.tailIdx] = x;
-        this.tailIdx ++;
-    }
-
-    // shift 구현
-    popF () {
-        const item = this.items[this.headIdx];
-        if (!item) return -1;
-
-        delete this.items[this.headIdx];
-        this.headIdx ++;
-
-        return item;
-    }
-
-    // pop 구현
-    popB () {
-        const item = this.items[this.tailIdx - 1];
-        if (!item) return -1;
-
-        delete this.items[this.tailIdx - 1];
-        this.tailIdx --;
-
-        return item;
-    }
-
-    size () {
-        return this.tailIdx - this.headIdx;
-    }
-
-    empty () {
-        return this.size() === 0 ? 1 : 0
-    }
-
-    front () {
-        const item = this.items[this.headIdx];
-        if (!item) return -1;
-
-        return item;
-    }
-
-    back () {
-        const item = this.items[this.tailIdx - 1];
-        if (!item) return -1;
-
-        return item;
-    }
-
-}
-
-const dequeue = new Dequeue();
-const num = Number(input.shift());
-
-let output = [];
-for (let i = 0; i < num; i++) {
-    const [cmd, val] = input[i].trim().split(' ');
-    switch (cmd) {
-        case 'push_front' : {
-            dequeue.pushF(Number(val));
-            break;
+    } else if(cmd === "pop_back"){
+        if(deque.length > 0){
+            ans.push(deque.pop());
+        } else {
+            ans.push(-1);
         }
-        case 'push_back' : {
-            dequeue.pushB(Number(val));
-            break;
+    } else if(cmd === "size"){
+        ans.push(deque.length);
+    } else if(cmd === "empty"){
+        if(deque.length > 0){
+            ans.push(0);
+        } else {
+            ans.push(1);
         }
-        case 'pop_front' : {
-            output.push(dequeue.popF());
-            break;
+    } else if(cmd === "front"){
+        if(deque.length > 0){
+            ans.push(deque[0]);            
+        } else {
+            ans.push(-1);
         }
-        case 'pop_back' : {
-            output.push(dequeue.popB());
-            break;
-        }
-        case 'size' : {
-            output.push(dequeue.size());
-            break;
-        }
-        case 'empty' : {
-            output.push(dequeue.empty());
-            break;
-        }
-        case 'front' : {
-            output.push(dequeue.front());
-            break;
-        }
-        case 'back' : {
-            output.push(dequeue.back());
-            break;
+    } else if(cmd === "back"){
+        if(deque.length > 0){
+            ans.push(deque[deque.length - 1]);
+        } else {
+            ans.push(-1);
         }
     }
 }
-
-console.log(output.join('\n'));
+console.log(ans.join("\n"));
