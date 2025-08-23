@@ -1,14 +1,19 @@
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().split("\n");
-// let input = fs.readFileSync("input.txt").toString().split("\n");
+let fs = require('fs');
+let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 
-let testCase = Number(input[0]);
+const testCases = Number(input.length);
+let result = '';
+for (const [i, v] of input.entries()) {
 
-for (let i = 1; i <= testCase; i++) {
-  let [r, s] = input[i].split(" ");
-  let result = "";
-  for (let j = 0; j <= s.length; j++) {
-    result += s.charAt(j).repeat(r);
-  }
-  console.log(result);
+    const arr = v.split(' ')
+    if (!arr[1]) continue;
+
+    const num = Number(arr[0]);
+    let str = ''
+    for (const j of arr[1].split('')) {
+        str += j.repeat(num)
+    }
+    result += str + `${i === testCases -1 ? '' : '\n'}`
 }
+
+console.log(result);

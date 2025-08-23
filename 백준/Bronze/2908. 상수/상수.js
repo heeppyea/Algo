@@ -1,4 +1,5 @@
 let fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString();
-let reversed  = input.split("").reverse().join('').split(' ');
-console.log(Math.max(...reversed))
+let input = fs.readFileSync("/dev/stdin").toString().trim().split(' ')
+
+const arr = input.map((v) => Number(v.split('').reverse().join(''))).reduce((a,b) => Math.max(a,b))
+console.log(arr)

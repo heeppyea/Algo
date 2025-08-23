@@ -1,18 +1,21 @@
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().split("\n");
+let fs = require('fs');
+let input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
 
-let testCases = Number(input[0]);
-for (let t = 1; t <= testCases; t++) {
-  let data = input[t].split(" ").map(Number);
-  let n = data[0];
-  let summary = 0;
-  for (let i = 1; i <= n; i++) {
-    summary += data[i];
-  }
-  let average = summary / n;
-  let cnt = 0;
-  for (let i = 1; i <= n; i++) {
-    if (data[i] > average) cnt += 1;
-  }
-  console.log(`${((cnt / n) * 100).toFixed(3)}%`);
+const count = Number(input[0]);
+const arr = input.slice(1);
+
+let result = '';
+
+for (const v of arr) {
+    const arr = v.split(' ').map(Number);
+    const num = arr[0];
+    const scores = arr.slice(1);
+
+    const avg = scores.reduce((a, b) => a + b, 0) / num;
+    const over = scores.filter(score => score > avg).length;
+
+    const percent = (over / num * 100).toFixed(3);
+    result += `${percent}%\n`;
 }
+
+process.stdout.write(result); 

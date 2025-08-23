@@ -1,11 +1,17 @@
+const rl = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
 
-let fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().split("\n");
-let num = Number(input[0]);
-
-function solution(num) {
-  for (let i = 1; i < 10; i++) {
-    console.log(num + " * " + i + " = " + num * i);
-  }
+const solution = (N) => {
+    let result = '' ;
+    for (let i = 1; i < 10; i ++) {
+        result += `${N} * ${i} = ${N * i}` + `${i !== 9 ? '\n' : ''}`;
+    }
+    console.log(result);
 }
-solution(num);
+
+rl.on('line', function(N) {
+    solution(N)
+    process.exit();
+})
